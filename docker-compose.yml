@@ -1,0 +1,134 @@
+version: '3.8'
+services:
+  db:
+    container_name: dmoj_mysql
+    image: mariadb:10-jammy
+    restart: always
+    volumes:
+      - ./database/:/var/lib/mysql/
+    env_file: [.env]
+    networks: [db]
+  redis:
+    container_name: dmoj_redis
+    image: redis:alpine
+    restart: always
+    networks: [uwsgi]
+  texoid:
+    container_name: dmoj_texoid
+    build:
+      context: .
+      dockerfile: .docker/texoid/Dockerfile
+    image: danielpclin/dmoj-texoid
+    restart: unless-stopped
+    networks: [uwsgi]
+  mathoid:
+    container_name: dmoj_mathoid
+    build:
+      context: .
+      dockerfile: .docker/mathoid/Dockerfile
+    image: danielpclin/dmoj-mathoid
+    restart: unless-stopped
+    volumes:
+      - ./.docker/mathoid/config.yaml:/node_modules/mathoid/config.yaml
+    networks: [uwsgi]
+  base:
+    container_name: dmoj_base
+    build:
+      context: .
+      dockerfile: .docker/base/Dockerfile
+    image: danielpclin/dmoj-base
+    network_mode: none
+  uwsgi:
+    container_name: dmoj_uwsgi
+    build:
+      context: .
+      dockerfile: .docker/uwsgi/Dockerfile
+    security_opt:
+      - seccomp=.docker/uwsgi/chrome.json
+    image: danielpclin/dmoj-uwsgi
+    restart: unless-stopped
+    volumes:
+      - assets:/assets/
+      - pdfcache:/pdfcache/
+      - datacache:/datacache/
+      - cache:/cache/
+      - ./media/:/media/
+      - ./problems/:/problems/
+    env_file: [.env]
+    networks: [uwsgi, nginx, db]
+    depends_on: [base, db, redis]
+  celery:
+    container_name: dmoj_celery
+    build:
+      context: .
+      dockerfile: .docker/celery/Dockerfile
+    image: danielpclin/dmoj-celery
+    restart: unless-stopped
+    volumes:
+      - datacache:/datacache/
+    env_file: [.env]
+    networks: [uwsgi, db]
+    depends_on: [base, db, redis]
+  bridged:
+    container_name: dmoj_bridged
+    build:
+      context: .
+      dockerfile: .docker/bridged/Dockerfile
+    image: danielpclin/dmoj-bridged
+    restart: unless-stopped
+    volumes:
+      - ./problems/:/problems/
+    env_file: [.env]
+    networks: [uwsgi, nginx, db, judge]
+    ports:
+      - "9999:9999"
+    depends_on: [base, db, redis]
+  wsevent:
+    container_name: dmoj_wsevent
+    build:
+      context: .
+      dockerfile: .docker/wsevent/Dockerfile
+    image: danielpclin/dmoj-wsevent
+    restart: unless-stopped
+    env_file: [.env]
+    networks: [uwsgi, nginx]
+  nginx:
+    container_name: dmoj_nginx
+    image: nginx:alpine
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - assets:/assets/
+      - pdfcache:/pdfcache/
+      - datacache:/datacache/
+      - cache:/cache/
+      - ./media/:/media/
+      - ./.docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    networks: [nginx]
+    depends_on: [uwsgi, wsevent]
+  watchdog:
+    container_name: dmoj_watchdog
+    build:
+      context: .
+      dockerfile: .docker/watchdog/Dockerfile
+    image: danielpclin/dmoj-watchdog
+    restart: unless-stopped
+    volumes:
+      - ./problems/:/problems/
+      - ./judge-hosts-list:/code/judge-hosts-list
+    env_file: [.env]
+    networks: [judge]
+    depends_on: [uwsgi, bridged]
+networks:
+  uwsgi:
+  db:
+  nginx:
+  judge:
+    external: true
+    name: dmoj_judge
+volumes:
+  assets:
+  pdfcache:
+  datacache:
+  cache:

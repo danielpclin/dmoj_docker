@@ -1,0 +1,3 @@
+[submodule "dmoj"]
+	path = dmoj
+	url = https://github.com/DMOJ/online-judge

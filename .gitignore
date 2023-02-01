@@ -1,0 +1,7 @@
+
+/.idea/
+/venv/
+/database/*
+/dmoj/*
+/.env
+/judge-hosts-list
