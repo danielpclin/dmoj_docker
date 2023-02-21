@@ -37,7 +37,7 @@ class Command(BaseCommand):
         if options['email'] is not None:
             email_message = EmailMultiAlternatives(
                 f"Generated accounts for exam, prefix {options['prefix']}, count {options['count']}, "
-                f"organization {options['organization']}, clear {options['clear_org']}",
+                f"organization {options['organization']}, clear {options['clear_orgs']}",
                 f.getvalue(), settings.SITE_ADMIN_EMAIL, [options['email']])
             email_message.send()
             print("Email sent.")
@@ -68,7 +68,7 @@ class Command(BaseCommand):
                 usr.refresh_from_db()
                 profile = usr.profile
 
-            if options['clear_org']:
+            if options['clear_orgs']:
                 profile.organizations.clear()
 
             if organization is not None:
