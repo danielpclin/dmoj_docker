@@ -143,12 +143,22 @@ cp robots.txt /assets/
 exit
 ```
 
+### Updating submodules
+```sh
+git submodule update --remote dmoj
+git add dmoj
+git commit -m "update submodule"
+```
+
 ### Updating The Site
 Updating various sections of the site requires different images to be rebuilt.
 
 If any prerequisites were modified, you will need to rebuild most of the images:
 ```sh
-sudo docker compose up -d --build base site celery bridged wsevent
+git reset --hard origin/master
+git submodule update --init --recursive
+sudo docker compose build
+sudo docker compose up -d
 ```
 If the static files are modified, read the section on [Managing Static Files](#managing-static-files).
 
