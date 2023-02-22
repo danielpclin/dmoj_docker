@@ -18,7 +18,10 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'  # Change to False once you a
 # Uncomment and set to the domain names this site is intended to serve.
 # You must do this once you set DEBUG to False.
 _domain = os.environ.get('DOMAIN', '')
-ALLOWED_HOSTS = [_domain]
+if os.environ.get("ALLOW_ALL_DOMAIN", "False") == "True":
+    ALLOWED_HOSTS = ["*"]
+else:
+    ALLOWED_HOSTS = [_domain]
 
 # Optional apps that DMOJ can make use of.
 INSTALLED_APPS += (
@@ -257,12 +260,12 @@ DMOJ_USER_DATA_DOWNLOAD_RATELIMIT = datetime.timedelta(days=10)
 # Documentation: https://github.com/wikimedia/mathoid
 MATHOID_URL = 'http://mathoid:10044'
 MATHOID_CACHE_ROOT = '/cache/mathoid/'
-MATHOID_CACHE_URL = f'//{_domain}/mathoid/'
+MATHOID_CACHE_URL = f'/mathoid/'
 
 # Texoid
 TEXOID_URL = 'http://texoid:8888'
 TEXOID_CACHE_ROOT = '/cache/texoid/'
-TEXOID_CACHE_URL = f'//{_domain}/texoid/'
+TEXOID_CACHE_URL = f'/texoid/'
 
 ## ======== Logging Settings ========
 # Documentation: https://docs.djangoproject.com/en/3.2/ref/settings/#logging
