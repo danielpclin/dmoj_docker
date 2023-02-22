@@ -186,8 +186,8 @@ EVENT_DAEMON_POST = 'ws://wsevent:15101/'
 # i.e. the path to /channels/ exposed by the daemon, through whatever proxy setup you have.
 
 # Using our standard nginx configuration, these should be:
-EVENT_DAEMON_GET = f'ws://wsevent/event/'
-EVENT_DAEMON_GET_SSL = f'wss://wsevent/event/'
+EVENT_DAEMON_GET = f'ws:///event/'
+EVENT_DAEMON_GET_SSL = f'wss:///event/'
 EVENT_DAEMON_POLL = '/channels/'
 
 # If you would like to use the AMQP-based event server from <https://github.com/DMOJ/event-server>,
