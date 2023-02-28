@@ -156,6 +156,7 @@ Updating various sections of the site requires different images to be rebuilt.
 If any prerequisites were modified, you will need to rebuild most of the images:
 ```sh
 git reset --hard origin/master
+git submodule foreach --recursive git reset --hard
 git submodule update --init --recursive
 sudo docker compose build
 sudo docker compose up -d
@@ -166,6 +167,18 @@ If only the source code is modified, a restart is sufficient:
 ```sh
 sudo docker compose restart site celery bridged wsevent
 ```
+
+### Updating the repository
+```sh
+git reset --hard origin/master
+git submodule foreach --recursive git reset --hard
+git submodule update --remote
+git add .
+git commit -m "git submodule updated"
+git push origin
+```
+
+
 
 ### Multiple Nginx Instances
 
