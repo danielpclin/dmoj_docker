@@ -160,6 +160,18 @@ git submodule foreach --recursive git reset --hard
 git submodule update --init --recursive
 sudo docker compose build
 sudo docker compose up -d
+sudo docker compose exec uwsgi bash
+./make_style.sh
+python3 manage.py collectstatic --noinput
+python3 manage.py compilemessages
+python3 manage.py compilejsi18n
+python3 manage.py migrate
+cp -rf resources/ /assets/
+cp 502.html /assets/
+cp logo.png /assets/
+cp robots.txt /assets/
+exit
+sudo docker compose up -d
 ```
 If the static files are modified, read the section on [Managing Static Files](#managing-static-files).
 

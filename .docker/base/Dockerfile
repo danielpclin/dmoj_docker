@@ -36,6 +36,8 @@ COPY --chown=dmoj:dmoj dmoj /site/
 COPY --chown=dmoj:dmoj local_settings.py /site/dmoj/
 COPY --chown=dmoj:dmoj .docker/base/generate_exam_users.py /site/judge/management/commands/
 
+RUN sed -i "s+this.websocket = new WebSocket(websocket);+this.websocket = new WebSocket(websocket.replace(new RegExp('(wss|ws):///event/'),\`\$1://\${location.host}/event/\`));+" /site/resources/event.js
+
 WORKDIR /site/
 
 RUN pip install -r requirements.txt
