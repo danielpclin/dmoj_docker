@@ -44,8 +44,8 @@ COPY --chown=dmoj:dmoj .docker/base/select2.min.css /site/resources/
 
 RUN sed -i "s+this.websocket = new WebSocket(websocket);+this.websocket = new WebSocket(websocket.replace(new RegExp('(wss|ws):///event/'),\`\$1://\${location.host}/event/\`));+" /site/resources/event.js
 RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+tex-chtml.min.js+" /site/judge/widgets/pagedown.py
-RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+//tex-chtml.min.js+" /site/resources/dmmd-preview.js
-RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+//tex-chtml.min.js+" /site/resources/martor-mathjax.js
+RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+/static/tex-chtml.min.js+" /site/resources/dmmd-preview.js
+RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+/static/tex-chtml.min.js+" /site/resources/martor-mathjax.js
 RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+{{ static('tex-chtml.min.js') }}+" /site/templates/mathjax-load.html
 RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+{{ static('tex-chtml.min.js') }}+" /site/templates/problem/raw.html
 
