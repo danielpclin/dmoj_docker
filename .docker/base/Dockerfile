@@ -53,4 +53,6 @@ WORKDIR /site/
 
 RUN pip install -r requirements.txt
 
+RUN sed -i "s+https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin+/static/lato.css+" /usr/local/lib/python3.11/site-packages/martor/static/plugins/css/semantic.css
+
 USER dmoj
