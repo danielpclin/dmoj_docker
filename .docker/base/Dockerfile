@@ -48,6 +48,8 @@ RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml
 RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+/static/tex-chtml.min.js+" /site/resources/martor-mathjax.js
 RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+{{ static('tex-chtml.min.js') }}+" /site/templates/mathjax-load.html
 RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+{{ static('tex-chtml.min.js') }}+" /site/templates/problem/raw.html
+RUN sed -i "s+return gravatar_url+return '/static/profile.png'+" /usr/local/lib/python3.11/site-packages/martor/static/plugins/css/semantic.css
+RUN sed -i "s+$('.ws-closed').show()+if(false) $('.ws-closed').show()+" /site/templates/submission/list.html
 
 WORKDIR /site/
 
