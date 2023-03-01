@@ -1,3 +1,5 @@
+from django.templatetags.static import static
+
 #####################################
 ########## Django settings ##########
 #####################################
@@ -205,10 +207,10 @@ CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
 ## CDN control.
 # Base URL for a copy of Ace editor.
 # Should contain ace.js, along with mode-*.js.
-ACE_URL = '///ace/'
-JQUERY_JS = '///jquery.min.js'
-SELECT2_JS_URL = '///select2.min.js'
-SELECT2_CSS_URL = '///select2.min.css'
+ACE_URL = static('ace')
+JQUERY_JS = static('jquery.min.js')
+SELECT2_JS_URL = static('select2.min.js')
+SELECT2_CSS_URL = static('/select2.min.css')
 
 # A map of Earth in equirectangular projection, for timezone selection.
 # Please try not to hotlink this poor site.
