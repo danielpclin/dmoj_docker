@@ -48,8 +48,8 @@ RUN sed -i "s+this.websocket = new WebSocket(websocket);+this.websocket = new We
 RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+/mathjax/tex-chtml.min.js+" /site/judge/widgets/pagedown.py
 RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+/static/mathjax/tex-chtml.min.js+" /site/resources/dmmd-preview.js
 RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+/static/mathjax/tex-chtml.min.js+" /site/resources/martor-mathjax.js
-RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+{{ static('mathjax/tex-chtml.min.js') }}+" /site/templates/mathjax-load.html
-RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+{{ static('mathjax/tex-chtml.min.js') }}+" /site/templates/problem/raw.html
+RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+/mathjax/tex-chtml.min.js+" /site/templates/mathjax-load.html
+RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+/mathjax/tex-chtml.min.js+" /site/templates/problem/raw.html
 RUN sed -i "s+return gravatar_url+return '/static/profile.png'+" /site/judge/jinja2/gravatar.py
 RUN sed -i "s+\$('.ws-closed').show()+if(false) \$('.ws-closed').show()+" /site/templates/submission/list.html
 
