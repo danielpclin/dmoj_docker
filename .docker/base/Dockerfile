@@ -50,8 +50,8 @@ RUN sed -i "s+this.websocket = new WebSocket(websocket);+this.websocket = new We
 
 # serve mathjax locally
 RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+/mathjax/tex-chtml.js+" /site/judge/widgets/pagedown.py
-RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+/static/mathjax/tex-chtml.js+" /site/resources/dmmd-preview.js
-RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+/static/mathjax/tex-chtml.js+" /site/resources/martor-mathjax.js
+RUN sed -i "s+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js'+window.location.protocol + '//' + window.location.host + '/static/mathjax/tex-chtml.js'+" /site/resources/dmmd-preview.js
+RUN sed -i "s+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js'+window.location.protocol + '//' + window.location.host + '/static/mathjax/tex-chtml.js'+" /site/resources/martor-mathjax.js
 RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+{{ static('mathjax/tex-chtml.js') }}+" /site/templates/mathjax-load.html
 RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+mathjax/tex-chtml.js+" /site/templates/problem/raw.html
 RUN sed -i "s+maker.make()+shutil.copytree(os.path.join(settings.DMOJ_RESOURCES, 'mathjax'), os.path.join(maker.dir, 'mathjax')); maker.make()+" /site/judge/views/problem.py
