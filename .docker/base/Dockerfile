@@ -44,6 +44,7 @@ COPY --chown=dmoj:dmoj .docker/base/select2.min.js /site/resources/
 COPY --chown=dmoj:dmoj .docker/base/select2.min.css /site/resources/
 COPY --chown=dmoj:dmoj .docker/base/lato.css /site/resources/
 COPY --chown=dmoj:dmoj .docker/base/profile.png /site/resources/
+COPY --chown=dmoj:dmoj .docker/base/mathjax_config.js /site/resources/
 
 # hostless websocket
 RUN sed -i "s+this.websocket = new WebSocket(websocket);+this.websocket = new WebSocket(websocket.replace(new RegExp('(wss|ws):///event/'),\`\$1://\${location.host}/event/\`));+" /site/resources/event.js
