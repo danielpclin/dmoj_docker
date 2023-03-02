@@ -37,8 +37,8 @@ COPY --chown=dmoj:dmoj local_settings.py /site/dmoj/
 COPY --chown=dmoj:dmoj .docker/base/generate_exam_users.py /site/judge/management/commands/
 
 COPY --chown=dmoj:dmoj .docker/base/ace /site/resources/ace/
+COPY --chown=dmoj:dmoj .docker/base/mathjax /site/resources/mathjax/
 COPY --chown=dmoj:dmoj .docker/base/jquery.min.js /site/resources/
-COPY --chown=dmoj:dmoj .docker/base/tex-chtml.min.js /site/resources/
 COPY --chown=dmoj:dmoj .docker/base/select2.min.js /site/resources/
 COPY --chown=dmoj:dmoj .docker/base/select2.min.css /site/resources/
 COPY --chown=dmoj:dmoj .docker/base/lato.css /site/resources/
