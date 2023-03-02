@@ -8,5 +8,9 @@ window.MathJax = {
     options: {
         enableMenu: false
     },
-    root: window.location.protocol + '//' + window.location.host + '/static/mathjax'
+    loader: {
+        paths: {
+            mathjax: window.location.protocol + '//' + window.location.host + '/static/mathjax'
+        }
+    }
 };
