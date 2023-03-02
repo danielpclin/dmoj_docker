@@ -54,8 +54,8 @@ RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml
 RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+/static/mathjax/tex-chtml.js+" /site/resources/martor-mathjax.js
 RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+{{ static('mathjax/tex-chtml.js') }}+" /site/templates/mathjax-load.html
 RUN sed -i "s+https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.min.js+mathjax/tex-chtml.js+" /site/templates/problem/raw.html
-RUN sed -i "s+assets.append('mathjax_config.js')+assets.extend(('mathjax_config.js', 'mathjax/tex-chtml.js'))+" /site/judge/views/problem.py
-RUN sed -i "s+for file in ('style.css', 'mathjax_config.js'):+for file in ('style.css', 'mathjax_config.js', 'mathjax/tex-chtml.js'):+" /site/judge/management/commands/render_pdf.py
+RUN sed -i "s+maker.make()+shutil.copytree(os.path.join(settings.DMOJ_RESOURCES, 'mathjax'), os.path.join(maker.dir, 'mathjax')); maker.make()+" /site/judge/views/problem.py
+RUN sed -i "s+maker.make(debug=True)+shutil.copytree(os.path.join(settings.DMOJ_RESOURCES, 'mathjax'), os.path.join(maker.dir, 'mathjax')); maker.make(debug=True)+" /site/judge/management/commands/render_pdf.py
 
 # remove gravatar
 RUN sed -i "s+return gravatar_url+return '/static/profile.png'+" /site/judge/jinja2/gravatar.py
