@@ -18,7 +18,10 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'  # Change to False once you a
 # Uncomment and set to the domain names this site is intended to serve.
 # You must do this once you set DEBUG to False.
 _domain = os.environ.get('DOMAIN', '')
-ALLOWED_HOSTS = [_domain]
+if os.environ.get("ALLOW_ALL_DOMAIN", "False") == "True":
+    ALLOWED_HOSTS = ["*"]
+else:
+    ALLOWED_HOSTS = [_domain]
 
 # Optional apps that DMOJ can make use of.
 INSTALLED_APPS += (
@@ -113,7 +116,7 @@ ADMINS = (
 )
 
 # The sender for the aforementioned emails.
-SERVER_EMAIL = f"DMOJ: Modern Online Judge <{os.environ.get('EMAIL_USER', 'dmoj.epl@gmail.com')}>"
+SERVER_EMAIL = f"{os.environ.get('EMAIL_USER', 'dmoj.epl@gmail.com')}"
 
 
 ################################################

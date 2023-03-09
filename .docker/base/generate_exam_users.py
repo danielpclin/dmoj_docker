@@ -34,10 +34,17 @@ class Command(BaseCommand):
             password = get_random_string(8)
             credentials.append((username, password))
         writer.writerows(credentials)
+
+        organization = None
+        if options['organization'] is not None:
+            try:
+                organization = Organization.objects.get(pk=options['organization'])
+            except Organization.DoesNotExist:
+                print(f"Organization id {options['organization']} does not exist, skipping.")
         if options['email'] is not None:
             email_message = EmailMultiAlternatives(
-                f"Generated accounts for exam, prefix {options['prefix']}, count {options['count']}, "
-                f"organization {options['organization']}, clear {options['clear_org']}",
+                f"Generated accounts for exam, {options['count']} accounts with prefix {options['prefix']}, "
+                f"Organization id {options['organization']}, clear_orgs {options['clear_orgs']}",
                 f.getvalue(), settings.SITE_ADMIN_EMAIL, [options['email']])
             email_message.send()
             print("Email sent.")
@@ -46,10 +53,6 @@ class Command(BaseCommand):
         f.close()
 
         print("Saving password to database...")
-
-        organization = None
-        if options['organization'] is not None:
-            organization = Organization.objects.get(pk=options['organization'])
 
         for username, password in tqdm.tqdm(credentials):
             usr, created = User.objects.update_or_create(username=username, defaults={
@@ -68,7 +71,7 @@ class Command(BaseCommand):
                 usr.refresh_from_db()
                 profile = usr.profile
 
-            if options['clear_org']:
+            if options['clear_orgs']:
                 profile.organizations.clear()
 
             if organization is not None:
