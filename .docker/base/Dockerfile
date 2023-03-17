@@ -40,4 +40,6 @@ WORKDIR /site/
 
 RUN pip install -r requirements.txt
 
+RUN pip install python-jose # bug see https://github.com/python-social-auth/social-app-django/issues/427
+
 USER dmoj
