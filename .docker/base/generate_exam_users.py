@@ -39,6 +39,7 @@ class Command(BaseCommand):
         if options['organization'] is not None:
             try:
                 organization = Organization.objects.get(pk=options['organization'])
+                print(f"Using organization: {organization.name}")
             except Organization.DoesNotExist:
                 print(f"Organization id {options['organization']} does not exist, skipping.")
         if options['email'] is not None:
