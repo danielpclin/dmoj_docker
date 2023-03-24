@@ -68,6 +68,8 @@ WORKDIR /site/
 
 RUN pip install -r requirements.txt
 
+RUN pip install python-jose # bug see https://github.com/python-social-auth/social-app-django/issues/427
+
 # serve lato.css locally
 RUN sed -i "s+https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin+/static/lato.css+" /usr/local/lib/python3.11/site-packages/martor/static/plugins/css/semantic.css
 
