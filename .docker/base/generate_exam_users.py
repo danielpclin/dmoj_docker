@@ -31,7 +31,7 @@ class Command(BaseCommand):
         credentials = []
         for i in range(1, options['count'] + 1):
             username = f"{options['prefix']}{i:0{len(str(options['count']))}}"
-            password = get_random_string(8)
+            password = get_random_string(8, "abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ0123456789")
             credentials.append((username, password))
         writer.writerows(credentials)
 
