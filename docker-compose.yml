@@ -81,7 +81,7 @@ services:
     env_file: [.env]
     networks: [uwsgi, nginx, db, judge]
     ports:
-      - "9999:9999"
+      - "127.0.0.1:9999:9999"
     depends_on: [base, db, redis]
   wsevent:
     container_name: dmoj_wsevent
@@ -97,7 +97,7 @@ services:
     image: nginx:alpine
     restart: always
     ports:
-      - "8080:80"
+      - "127.0.0.1:8080:80"
     volumes:
       - assets:/assets/
       - pdfcache:/pdfcache/
