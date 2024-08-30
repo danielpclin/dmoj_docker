@@ -303,7 +303,7 @@ LOGGING = {
     'loggers': {
         # Site 500 error mails.
         'django.request': {
-            'handlers': ['console', 'mail_admins'],
+            'handlers': ['console'],
             'level': 'ERROR',
             'propagate': False,
         },
