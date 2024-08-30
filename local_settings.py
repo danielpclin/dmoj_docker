@@ -112,7 +112,6 @@ EMAIL_PORT = 587
 # when the server experiences an error when DEBUG = False.
 ADMINS = (
     ('DMOJ', os.environ.get('EMAIL_USER', 'dmoj.epl@gmail.com')),
-    ('Daniel', 'daniel.pclin@gapp.nthu.edu.tw')
 )
 
 # The sender for the aforementioned emails.
